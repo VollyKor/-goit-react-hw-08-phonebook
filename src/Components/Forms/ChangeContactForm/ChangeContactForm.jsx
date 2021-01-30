@@ -34,7 +34,6 @@ export default function ChangeContactForm({ contactObj, onClose }) {
       name,
       number,
     };
-    console.log(changedContact);
 
     dispatch(
       contactsOperations.changeContact({
