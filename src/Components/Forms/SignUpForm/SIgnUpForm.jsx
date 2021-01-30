@@ -67,7 +67,7 @@ export default function SignUpForm() {
           <p className={s.error}>{errors.password?.message}</p>
         </label>
 
-        <Button type="submit">Log In</Button>
+        <Button type="submit">Sign up</Button>
       </form>
     </div>
   );

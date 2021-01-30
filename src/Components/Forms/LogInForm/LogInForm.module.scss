@@ -52,3 +52,15 @@
   color: red;
   z-index: 2;
 }
+
+.link {
+  text-decoration: none;
+  color: var(--primary-color);
+  border: 2px solid transparent;
+  border-radius: 4px;
+
+  &:hover,
+  &:focus {
+    border: 2px solid var(--primary-color);
+  }
+}

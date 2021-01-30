@@ -1,19 +1,18 @@
 import s from './Filter.module.scss';
-import { useState } from 'react';
+import { contactsActions, contactsSelectors } from 'redux/phonebook';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Filter() {
-  const [filtered, setFiltered] = useState('');
+  const dispatch = useDispatch();
+  const filterQuery = useSelector(contactsSelectors.getFilterQuery);
 
-  const handleFilter = e => {
-    setFiltered(e.target.value);
-  };
   return (
     <label className={s.label}>
       <span className="">Filter</span>
       <input
         type="text"
-        value={filtered}
-        onChange={handleFilter}
+        value={filterQuery}
+        onChange={e => dispatch(contactsActions.setFilter(e.target.value))}
         placeholder="some query"
         className={s.input}
       />

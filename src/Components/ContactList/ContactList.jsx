@@ -1,10 +1,10 @@
 import ContactItem from './ContactItem/ContactItem';
 import s from './ContactList.module.scss';
-import { getContacts } from 'redux/phonebook/phonebook-selectors';
+import { getVisibleContacts } from 'redux/phonebook/phonebook-selectors';
 import { useSelector } from 'react-redux';
 
 export default function ContactList() {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(getVisibleContacts);
 
   return (
     <>

@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { contactsOperations } from 'redux/phonebook';
 import { useDispatch } from 'react-redux';
 
-const { changeContact, addContact } = contactsOperations;
+const { addContact } = contactsOperations;
 
 //  регулярное выраженияе для фильтрации чисел
 // +3 (111) 111-11-11 ==> 31111111111
@@ -18,63 +18,39 @@ export default function Form({ contactObj, onClose }) {
   //  Validation
   // ====================================================
   const schema = yup.object().shape({
-    firstName: yup
-      .string()
-      .min(3, 'More then 3chars')
-      .max(20)
-      .required('Required'),
-    lastName: yup.string().min(3).max(20).required('Required'),
-    phoneNumber: yup
+    name: yup.string().min(3, 'More then 3chars').max(20).required('Required'),
+    number: yup
       .string()
       .test('len', 'Fill all space', val => {
         const val_length_without_dashes = val.replace(/\D/g, '').length;
         return val_length_without_dashes === 11;
       })
       .required(),
-    email: yup.string().email().required(),
   });
 
   //  Reaact hook Form
   // ========================================
   const { register, errors, handleSubmit } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: defaultValues(), //  for reset form with default values
+    defaultValues: {
+      name: '',
+      number: '',
+    }, //  for reset form with default values
   });
-
-  // react hook form with default values part №1
-  // ====================================
-  function defaultValues() {
-    if (contactObj) {
-      const { firstName, lastName, phoneNumber, email } = contactObj;
-      return {
-        firstName,
-        lastName,
-        phoneNumber,
-        email,
-      };
-    }
-    return {
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      email: '',
-    };
-  }
 
   // Submit Form
   // ==============================================================
   const onSubmit = (data, e) => {
+    const { name, number } = data;
     const newContact = {
-      name: data.firstName,
-      number: data.phoneNumber,
+      name,
+      number,
     };
 
     dispatch(addContact(newContact));
     e.target.reset();
     onClose();
     return;
-
-    //  добавить изменение контактов
   };
 
   return (
@@ -85,60 +61,26 @@ export default function Form({ contactObj, onClose }) {
         </h2>
 
         <label className={s.label}>
-          <span className={s.inputTitle}>First Name</span>
-          <input
-            type="name"
-            name="firstName"
-            className={s.input}
-            ref={register({ required: true, maxLength: 20 })}
-          />
-          <p className={s.error}>{errors.firstName?.message}</p>
+          <span className={s.inputTitle}>Name</span>
+          <input type="name" name="name" className={s.input} ref={register} />
+          <p className={s.error}>{errors.name?.message}</p>
         </label>
 
         <label className={s.label}>
-          <span className={s.inputTitle}>Second Name</span>
-          <input
-            type="name"
-            name="lastName"
-            className={s.input}
-            ref={register({ required: true, maxLength: 20 })}
-          />
-          <p className={s.error}>{errors.lastName?.message}</p>
-        </label>
-
-        <label className={s.label}>
-          <span className={s.inputTitle}>E-mail</span>
-          <input name="email" className={s.input} ref={register} />
-          <p className={s.error}>{errors.email?.message}</p>
-        </label>
-
-        <label className={s.label}>
-          <span className={s.inputTitle}>Phone number</span>
+          <span className={s.inputTitle}>Number</span>
           <InputMask
-            name="phoneNumber"
+            name="number"
             mask="+3 (999) 999-99-99"
             alwaysShowMask={true}
             className={s.input}
             ref={register}
           />
-          <p className={s.error}>{errors.phoneNumber?.message}</p>
+          <p className={s.error}>{errors.number?.message}</p>
         </label>
 
-        <label className={s.label}>
-          <span className={s.inputTitle} style={{ display: 'block' }}>
-            Add to Chosen?
-          </span>
-          <input type="checkbox" />
-        </label>
-        {contactObj ? (
-          <button className={s.btn} type="submit">
-            Save changes
-          </button>
-        ) : (
-          <button type="submit" className={s.btn}>
-            Add contact
-          </button>
-        )}
+        <button type="submit" className={s.btn}>
+          Add contact
+        </button>
       </form>
     </div>
   );

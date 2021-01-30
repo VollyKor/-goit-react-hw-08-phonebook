@@ -26,7 +26,7 @@ export default function ContactItem({ contactObj }) {
       </p>
 
       <div className={`flex-box ${s.btnList}`}>
-        <button
+        {/* <button
           type="button"
           className={s.btn}
           onClick={() => {
@@ -34,7 +34,7 @@ export default function ContactItem({ contactObj }) {
           }}
         >
           More Info
-        </button>
+        </button> */}
 
         <button
           type="button"

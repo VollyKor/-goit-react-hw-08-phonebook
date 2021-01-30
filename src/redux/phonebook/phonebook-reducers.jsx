@@ -1,11 +1,15 @@
 import { combineReducers, createReducer } from '@reduxjs/toolkit';
-import { contactsOperations } from 'redux/phonebook';
+import { contactsOperations, contactsActions } from 'redux/phonebook';
 const {
   setContacts,
   addContact,
   deleteContact,
   changeContact,
 } = contactsOperations;
+
+const FilterReducer = createReducer('', {
+  [contactsActions.setFilter]: (_, { payload }) => payload,
+});
 
 const ContactListReducer = createReducer([], {
   [setContacts.fulfilled]: (_, { payload }) => payload,
@@ -25,6 +29,7 @@ const ContactListReducer = createReducer([], {
 
 const phonebookReducer = combineReducers({
   entities: ContactListReducer,
+  filterQuery: FilterReducer,
 });
 
 export default phonebookReducer;

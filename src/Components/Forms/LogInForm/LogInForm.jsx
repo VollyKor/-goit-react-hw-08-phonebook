@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { authOperations } from 'redux/auth';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function LogInForm() {
   const dispatch = useDispatch();
@@ -55,6 +56,10 @@ export default function LogInForm() {
           <p className={s.error}>{errors.password?.message}</p>
         </label>
         <Button type="submit">Log In</Button>
+        <span> or </span>
+        <Link className={s.link} to="register">
+          Sign up
+        </Link>
       </form>
     </div>
   );
