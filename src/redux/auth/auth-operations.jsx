@@ -10,35 +10,50 @@ const token = {
   },
 };
 
-export const register = createAsyncThunk('auth/signup', async credential => {
-  try {
-    const { data } = await axiosPB.post('/users/signup', credential);
-    token.set(data.token);
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-});
+export const register = createAsyncThunk(
+  'auth/signup',
+  async (credential, thunkAPI) => {
+    try {
+      const { data } = await axiosPB.post('/users/signup', credential);
+      token.set(data.token);
+      return data;
+    } catch (err) {
+      const newErrorObg = {
+        status: err.response.status,
+        message: err.response.statusText,
+      };
+      return thunkAPI.rejectWithValue(newErrorObg);
+    }
+  },
+);
 
-export const login = createAsyncThunk('auth/login', async credentials => {
-  try {
-    const { data } = await axiosPB.post('/users/login', credentials);
-    token.set(data.token);
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-});
+export const login = createAsyncThunk(
+  'auth/login',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data } = await axiosPB.post('/users/login', credentials);
+      token.set(data.token);
+      return data;
+    } catch (err) {
+      const newErrorObg = {
+        status: err.response.status,
+        message: err.response.statusText,
+      };
+      return thunkAPI.rejectWithValue(newErrorObg);
+    }
+  },
+);
 
-export const logout = createAsyncThunk('auth/logout', async () => {
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await axiosPB.post('/users/logout');
     token.unset();
-  } catch (error) {
-    console.log(error);
-    throw error;
+  } catch (err) {
+    const newErrorObg = {
+      status: err.response.status,
+      message: err.response.statusText,
+    };
+    return thunkAPI.rejectWithValue(newErrorObg);
   }
 });
 
@@ -54,7 +69,11 @@ export const getUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
 
     const user = await axiosPB.get('/users/current');
     return user.data;
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    const newErrorObg = {
+      status: err.response.status,
+      message: err.response.statusText,
+    };
+    return thunkAPI.rejectWithValue(newErrorObg);
   }
 });

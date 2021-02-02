@@ -1,5 +1,7 @@
 .btn {
+  position: relative;
   padding: 5px;
+
   outline: none;
   border-radius: 4px;
   border: solid 2px var(--primary-color);
@@ -16,4 +18,31 @@
     background-color: var(--primary-color);
     color: var(--primary-color-text);
   }
+}
+
+@keyframes Spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation-name: Spinner;
+  animation-duration: 3000ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  position: absolute;
+  right: 2px;
+  top: 4.5px;
+  margin-left: 5px;
+  width: 15px;
+  height: 15px;
+}
+
+body .btn.loading {
+  padding-right: 20px;
 }

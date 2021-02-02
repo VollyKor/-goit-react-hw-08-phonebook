@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { authOperations } from 'redux/auth';
 import { useDispatch } from 'react-redux';
-
+import ErrorResponse from 'Components/Errors/ErrorResponse';
 export default function SignUpForm() {
   const dispatch = useDispatch();
 
@@ -68,6 +68,7 @@ export default function SignUpForm() {
         </label>
 
         <Button type="submit">Sign up</Button>
+        <ErrorResponse />
       </form>
     </div>
   );

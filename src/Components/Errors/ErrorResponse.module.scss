@@ -1,0 +1,12 @@
+.error {
+  position: absolute;
+  bottom: -2px;
+  left: 40px;
+  opacity: 1;
+  font-size: 12px;
+  color: red;
+  text-align: center;
+  text-decoration: underline;
+
+  transition: opacity 1s linear;
+}

@@ -3,6 +3,7 @@ import { Switch } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { authSelectors, authOperations } from 'redux/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
 
 import LogInForm from './Components/Forms/LogInForm/LogInForm';
 import SignUpForm from './Components/Forms/SignUpForm/SIgnUpForm';
@@ -34,7 +35,13 @@ function App() {
   return (
     !isFetching && (
       <>
-        <Suspense fallback={<p>Загружаем...</p>}>
+        <Suspense
+          fallback={
+            <div className="suspenseWrapper">
+              <CgSpinnerTwoAlt color="#e55d34" className="suspenseLoader" />
+            </div>
+          }
+        >
           <NavBar />
           <main>
             <Switch>

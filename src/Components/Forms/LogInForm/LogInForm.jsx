@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { authOperations } from 'redux/auth';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import ErrorResponse from 'Components/Errors/ErrorResponse';
 export default function LogInForm() {
   const dispatch = useDispatch();
   //  Validation
@@ -60,6 +60,7 @@ export default function LogInForm() {
         <Link className={s.link} to="register">
           Sign up
         </Link>
+        <ErrorResponse />
       </form>
     </div>
   );

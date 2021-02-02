@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { contactsOperations } from 'redux/phonebook';
 import { useDispatch } from 'react-redux';
-
+import ErrorResponse from 'Components/Errors/ErrorResponse';
 const { addContact } = contactsOperations;
 
 //  регулярное выраженияе для фильтрации чисел
@@ -81,6 +81,7 @@ export default function Form({ contactObj, onClose }) {
         <button type="submit" className={s.btn}>
           Add contact
         </button>
+        <ErrorResponse />
       </form>
     </div>
   );

@@ -27,3 +27,30 @@ body .react-datepicker__input-container,
 body .react-datepicker-wrapper {
   display: block;
 }
+
+@keyframes SuspenseLoader {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.suspenseLoader {
+  animation-name: SuspenseLoader;
+  animation-duration: 3000ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  width: 300px;
+  height: 300px;
+}
+
+.suspenseWrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 1;
+}
