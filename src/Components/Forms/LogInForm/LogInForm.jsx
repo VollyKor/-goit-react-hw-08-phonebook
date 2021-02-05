@@ -32,7 +32,7 @@ export default function LogInForm() {
 
   const onSubmit = (data, e) => {
     dispatch(authOperations.login(data));
-    e.target.reset();
+    // e.target.reset();
     return;
   };
 

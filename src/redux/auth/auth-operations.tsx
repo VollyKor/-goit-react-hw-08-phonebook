@@ -2,7 +2,7 @@ import { axiosPB } from 'service';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const token = {
-  set(token) {
+  set(token: string): void {
     axiosPB.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
   unset() {

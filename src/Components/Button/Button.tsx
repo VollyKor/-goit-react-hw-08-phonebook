@@ -3,13 +3,22 @@ import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import { authSelectors } from 'redux/auth';
 import { useSelector } from 'react-redux';
 
-export default function Button({
+type ButtonTypes = "button" | "submit" | "reset";
+
+interface Props {
+  type: ButtonTypes ;
+  className: string;
+  onClick: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
+  children?: React.ReactNode;
+}
+
+ export default function Button ({
   children,
   onClick,
   className,
   type = 'button',
-}) {
-  const isLoading = useSelector(authSelectors.getIsLoading);
+} : Props) {
+  const isLoading = useSelector<boolean>(authSelectors.getIsLoading);
 
   return (
     <button
@@ -26,3 +35,5 @@ export default function Button({
     </button>
   );
 }
+
+// export default Button

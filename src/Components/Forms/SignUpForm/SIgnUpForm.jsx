@@ -38,7 +38,7 @@ export default function SignUpForm() {
 
   const onSubmit = (data, e) => {
     dispatch(authOperations.register(data));
-    e.target.reset();
+    // e.target.reset();
     return;
   };
 
