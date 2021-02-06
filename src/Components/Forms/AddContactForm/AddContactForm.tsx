@@ -12,17 +12,21 @@ const { addContact } = contactsOperations;
 // +3 (111) 111-11-11 ==> 31111111111
 //  const unmask = value.replace(/\D/g, '');
 
-export default function Form({ contactObj, onClose }) {
+interface IProps {
+  onClose : ((event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+}
+
+export default function Form({ onClose } : IProps) {
   const dispatch = useDispatch();
 
   //  Validation
   // ====================================================
-  const schema = yup.object().shape({
+  const schema = yup.object({
     name: yup.string().min(3, 'More then 3chars').max(20).required('Required'),
     number: yup
       .string()
-      .test('len', 'Fill all space', val => {
-        const val_length_without_dashes = val.replace(/\D/g, '').length;
+      .test('len', 'Fill all space',(val='') => {
+          const val_length_without_dashes = val.replace(/\D/g, '').length;
         return val_length_without_dashes === 11;
       })
       .required(),
@@ -30,25 +34,23 @@ export default function Form({ contactObj, onClose }) {
 
   //  Reaact hook Form
   // ========================================
-  const { register, errors, handleSubmit } = useForm({
+interface UseFormInputs {
+  name: string;
+  number: string;
+}
+
+  const { register, errors, handleSubmit } = useForm<UseFormInputs>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: '',
       number: '',
-    }, //  for reset form with default values
+    }, 
   });
 
   // Submit Form
   // ==============================================================
-  const onSubmit = (data, e) => {
-    const { name, number } = data;
-    const newContact = {
-      name,
-      number,
-    };
-
-    dispatch(addContact(newContact));
-    e.target.reset();
+    const onSubmit = (data: UseFormInputs ) => {
+    dispatch(addContact(data));
     onClose();
     return;
   };
@@ -57,7 +59,7 @@ export default function Form({ contactObj, onClose }) {
     <div className={s.formWrapper}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={s.title}>
-          {contactObj ? 'Change Contact' : 'New Contact'}
+         'New Contact'
         </h2>
 
         <label className={s.label}>

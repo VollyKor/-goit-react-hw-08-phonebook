@@ -73,7 +73,7 @@ export default function NavBar() {
                 className={s.btnLogout}
                 onClick={() => {
                   dispatch(authOperations.logout());
-                  dispatch(contactsOperations.setContacts([]));
+                  dispatch(contactsOperations.setContacts());
                 }}
               >
                 Logout

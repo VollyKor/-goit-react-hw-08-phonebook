@@ -13,7 +13,7 @@ export default function Filter() {
         type="text"
         value={filterQuery}
         onChange={e => dispatch(contactsActions.setFilter(e.target.value))}
-        placeholder="some query"
+        placeholder="Query"
         className={s.input}
       />
     </label>

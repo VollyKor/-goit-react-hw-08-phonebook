@@ -1,6 +1,6 @@
 import { axiosPB } from 'service';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {ICredentials, IState} from '../store.interface'
+import { ICredentials, IState, IError, ILogIn, ISignUp } from '../store.interface'
 
 const token = {
   set(token: string): void {
@@ -11,36 +11,38 @@ const token = {
   },
 };
 
+function getErrorData (err: any): IError {
+  const newErrorObj: IError = {
+status: err.response.status,
+message: err.response.data.message || err.response.statusText,
+descMessage: err.response.data._message || '' 
+  };
+  return newErrorObj;
+}
+
+
 export const register = createAsyncThunk(
   'auth/signup',
-  async (credential, thunkAPI) => {
+  async (credential: ISignUp, thunkAPI) => {
     try {
       const {data}: {data: ICredentials} = await axiosPB.post('/users/signup', credential);
       token.set(data.token);
       return data;
     } catch (err) {
-      const newErrorObg = {
-        status: err.response.status,
-        message: err.response.statusText,
-      };
-      return thunkAPI.rejectWithValue(newErrorObg);
+      return thunkAPI.rejectWithValue(getErrorData(err));
     }
   },
 );
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (credentials, thunkAPI) => {
+  async (credentials : ILogIn, thunkAPI) => {
     try {
       const { data }: {data: ICredentials} = await axiosPB.post('/users/login', credentials);
       token.set(data.token);
       return data;
     } catch (err) {
-      const newErrorObg = {
-        status: err.response.status,
-        message: err.response.statusText,
-      };
-      return thunkAPI.rejectWithValue(newErrorObg);
+        return thunkAPI.rejectWithValue(getErrorData(err));
     }
   },
 );
@@ -50,11 +52,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     await axiosPB.post('/users/logout');
     token.unset();
   } catch (err) {
-    const newErrorObg = {
-      status: err.response.status,
-      message: err.response.statusText,
-    };
-    return thunkAPI.rejectWithValue(newErrorObg);
+return thunkAPI.rejectWithValue(getErrorData(err));
   }
 });
 
@@ -71,10 +69,6 @@ export const getUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
     const user = await axiosPB.get('/users/current');
     return user.data;
   } catch (err) {
-    const newErrorObg = {
-      status: err.response.status,
-      message: err.response.statusText,
-    };
-    return thunkAPI.rejectWithValue(newErrorObg);
+return thunkAPI.rejectWithValue(getErrorData(err));
   }
 });

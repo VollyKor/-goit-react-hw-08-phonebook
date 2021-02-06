@@ -4,21 +4,28 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { contactsOperations } from 'redux/phonebook';
 import { useDispatch } from 'react-redux';
+import { IContact, INewContact } from 'redux/store.interface';
 
-export default function ChangeContactForm({ contactObj, onClose }) {
+interface IProps {
+  contactObj: IContact;
+  onClose : ((event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+}
+
+export default function ChangeContactForm({ contactObj, onClose }: IProps) {
   const dispatch = useDispatch();
   const { name, number, id } = contactObj;
 
   //  Validation
   // ====================================================
   const schema = yup.object().shape({
-    name: yup.string().min(3, 'More then 3chars').max(20),
-    number: yup.string().min(3, 'More then 3chars').max(20),
+    name: yup.string().min(3, 'More then 3chars').max(20).required(),
+    number: yup.string().min(3, 'More then 3chars').max(20).required()
   });
 
   //  Reaact hook Form
   // ========================================
-  const { register, errors, handleSubmit } = useForm({
+
+  const { register, errors, handleSubmit } = useForm<INewContact>({
     resolver: yupResolver(schema),
     defaultValues: {
       name,
@@ -28,20 +35,12 @@ export default function ChangeContactForm({ contactObj, onClose }) {
 
   // Submit Form
   // ==============================================================
-  const onSubmit = (data, e) => {
-    const { name, number } = data;
-    const changedContact = {
-      name,
-      number,
-    };
+  const onSubmit = (data: INewContact) => {
+    const changedContact = data
 
     dispatch(
-      contactsOperations.changeContact({
-        id,
-        changedContact,
-      }),
+      contactsOperations.changeContact({id, changedContact}),
     );
-    e.target.reset();
     onClose();
     return;
   };
@@ -59,7 +58,7 @@ export default function ChangeContactForm({ contactObj, onClose }) {
             className={s.input}
             ref={register({ required: true, maxLength: 20 })}
           />
-          <p className={s.error}>{errors.firstName?.message}</p>
+          <p className={s.error}>{errors.name?.message}</p>
         </label>
 
         <label className={s.label}>
@@ -70,7 +69,7 @@ export default function ChangeContactForm({ contactObj, onClose }) {
             className={s.input}
             ref={register({ required: true })}
           />
-          <p className={s.error}>{errors.lastName?.message}</p>
+          <p className={s.error}>{errors.number?.message}</p>
         </label>
 
         <button className={s.btn} type="submit">

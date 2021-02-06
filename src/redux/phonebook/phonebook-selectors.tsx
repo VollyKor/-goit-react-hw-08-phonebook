@@ -1,7 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
+import {IState} from '../store.interface'
 
-export const getContacts = state => state.phonebook.entities;
-export const getFilterQuery = state => state.phonebook.filterQuery;
+
+export const getContacts = (state: IState) => state.phonebook.entities;
+export const getFilterQuery = (state: IState) => state.phonebook.filterQuery;
 
 export const getVisibleContacts = createSelector(
   [getContacts, getFilterQuery],

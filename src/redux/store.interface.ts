@@ -7,12 +7,17 @@ export interface IState {
 }
 
 export interface IPhonebook {
-    entities: IContacts[]
+    entities: IContact[]
     filterQuery: string;
 } 
 
-export interface IContacts {
+export interface IContact {
     id: string;
+    name: string;
+    number: string;
+}
+
+export interface INewContact {
     name: string;
     number: string;
 }
@@ -40,6 +45,7 @@ export interface IAuth {
 export interface IError {
     status: number;
     message: string;
+    descMessage?: string;
 }
 
 export interface IUser {
@@ -50,4 +56,15 @@ export interface IUser {
 export interface ICredentials {
     token: string;
     user: IUser;
+}
+
+export interface ILogIn {
+    email: string;
+    password: string;
+}
+
+export interface ISignUp {
+    email: string; 
+    name: string;
+    password: string;
 }

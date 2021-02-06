@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { authOperations, authActions } from 'redux/auth';
-import {IAuth, IError} from '../store.interface'
+import {IAuth, IError, ICredentials, IUser} from '../store.interface'
 
 const initialState : IAuth = {
     user: { name: null, email: null },
@@ -11,64 +11,75 @@ const initialState : IAuth = {
     error: null,
   }
 
+
+interface ICredentialPayload {
+  payload: ICredentials;
+}
+
+interface IErrorPayload {
+  payload: IError;
+}
+
+interface IUserPayload {
+  payload: IUser;
+}
+
 const authReducer = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
   extraReducers: {
-    [authActions.cleanseError.toString()](state, _) {
+    [authActions.cleanseError.toString()](state : IAuth, _) {
       state.error = null;
     },
 
     // Register
     // ============================================
-    [authOperations.register.pending.toString()](state, _) {
+    [authOperations.register.pending.toString()](state : IAuth, _) {
       state.isLoading = true;
       state.error = null;
     },
-    [authOperations.register.fulfilled.toString()](state, { payload }) {
+    [authOperations.register.fulfilled.toString()] (state : IAuth, { payload } : ICredentialPayload ) {
       state.isLoading = false;
       state.isLoggedIn = true;
       state.user = payload.user;
       state.token = payload.token;
     },
-    [authOperations.register.rejected.toString()](state, action) {
-      state.error = action.payload;
+    [authOperations.register.rejected.toString()](state : IAuth, {payload} : IErrorPayload) {
+      state.error = payload;
       state.isLoading = false;
     },
 
     // Login
     // =======================================
-    [authOperations.login.pending.toString()](state, _) {
+    [authOperations.login.pending.toString()](state : IAuth, _) {
       state.isLoading = true;
       state.error = null;
     },
-    [authOperations.login.fulfilled.toString()](state, { payload }) {
+    [authOperations.login.fulfilled.toString()](state : IAuth, { payload }: ICredentialPayload) {
       state.isLoading = false;
       state.user = payload.user;
       state.token = payload.token;
       state.isLoggedIn = true;
     },
-    [authOperations.login.rejected.toString()](state, action) {
-      console.log('action', action);
-      state.error = action.payload;
-
+    [authOperations.login.rejected.toString()](state: IAuth, {payload} : IErrorPayload) {
+      state.error = payload;
       state.isLoading = false;
     },
 
     // Logout
     // ================================================
-    [authOperations.logout.pending.toString()](state, _) {
+    [authOperations.logout.pending.toString()](state: IAuth, _) {
       state.isLoading = true;
       state.error = null;
     },
-    [authOperations.logout.fulfilled.toString()](state, _) {
+    [authOperations.logout.fulfilled.toString()](state: IAuth, _) {
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoading = false;
       state.isLoggedIn = false;
     },
-    [authOperations.logout.rejected.toString()](state, {payload}) {
+    [authOperations.logout.rejected.toString()](state: IAuth, {payload} : IErrorPayload) {
       state.error = payload;
       state.isLoading = false;
     },
@@ -76,13 +87,13 @@ const authReducer = createSlice({
     // Refresh / getUser
     // =======================================================
 
-    [authOperations.getUser.pending.toString()](state, _) {
+    [authOperations.getUser.pending.toString()](state: IAuth, _) {
       state.isFetching = true;
       state.isLoading = true;
       state.error = null;
     },
 
-    [authOperations.getUser.fulfilled.toString()](state, { payload }) {
+    [authOperations.getUser.fulfilled.toString()](state: IAuth, { payload } : IUserPayload)  {
       state.isLoading = false;
       state.isFetching = false;
       if (payload !== undefined) {
@@ -90,10 +101,9 @@ const authReducer = createSlice({
       }
       state.isLoggedIn = true;
     },
-    [authOperations.getUser.rejected.toString()](state, { payload }) {
+    [authOperations.getUser.rejected.toString()](state: IAuth, _) {
       state.isFetching = false;
       state.isLoading = false;
-      console.log('error', payload);
     },
   },
 });

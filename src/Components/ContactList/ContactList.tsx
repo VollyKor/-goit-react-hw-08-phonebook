@@ -14,7 +14,7 @@ export default function ContactList() {
       <ul className={`${s.list} ${s.listWrapper}`}>
         {contacts.map(el => {
           return (
-            <li tabIndex="0" key={el.id} className={s.item}>
+            <li tabIndex={0} key={el.id} className={s.item}>
               <div className={s.itemWrapper}>
                 <ContactItem contactObj={el} />
               </div>
