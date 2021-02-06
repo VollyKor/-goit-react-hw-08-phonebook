@@ -18,7 +18,7 @@ interface Props {
   className,
   type = 'button',
 } : Props) {
-  const isLoading = useSelector<boolean>(authSelectors.getIsLoading);
+  const isLoading = useSelector(authSelectors.getIsLoading);
 
   return (
     <button

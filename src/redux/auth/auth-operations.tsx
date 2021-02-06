@@ -1,5 +1,6 @@
 import { axiosPB } from 'service';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import {ICredentials, IState} from '../store.interface'
 
 const token = {
   set(token: string): void {
@@ -14,7 +15,7 @@ export const register = createAsyncThunk(
   'auth/signup',
   async (credential, thunkAPI) => {
     try {
-      const { data } = await axiosPB.post('/users/signup', credential);
+      const {data}: {data: ICredentials} = await axiosPB.post('/users/signup', credential);
       token.set(data.token);
       return data;
     } catch (err) {
@@ -31,7 +32,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await axiosPB.post('/users/login', credentials);
+      const { data }: {data: ICredentials} = await axiosPB.post('/users/login', credentials);
       token.set(data.token);
       return data;
     } catch (err) {
@@ -59,8 +60,8 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 
 export const getUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
   try {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
+    const state  = thunkAPI.getState() as IState;
+    const persistedToken = state.auth.token ;
 
     if (persistedToken === null) {
       return;
