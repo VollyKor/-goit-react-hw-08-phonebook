@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { authOperations } from 'redux/auth';
 import { useDispatch } from 'react-redux';
 import ErrorResponse from 'Components/Errors/ErrorResponse';
-import { ISignUp } from 'redux/store.interface';
+import { ISignUp } from 'Interfaces/interface';
 
 export default function SignUpForm() {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchContactsAPI } from 'service';
-import { INewContact } from '../store.interface';
+import { INewContact } from '../../Interfaces/interface';
 
 export const setContacts = createAsyncThunk(
   'phonebook/fetchContacts',

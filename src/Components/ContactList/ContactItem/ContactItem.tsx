@@ -4,15 +4,15 @@ import s from './ContactItem.module.scss';
 import { contactsOperations } from 'redux/phonebook';
 import { useDispatch } from 'react-redux';
 import ChangeContactForm from 'Components/Forms/ChangeContactForm/ChangeContactForm';
-import { IContact } from 'redux/store.interface';
+import { IContact } from 'Interfaces/interface';
 
 const { deleteContact } = contactsOperations;
 
 interface IProps {
-  contactObj: IContact
+  contactObj: IContact;
 }
 
-export default function ContactItem({ contactObj } : IProps) {
+export default function ContactItem({ contactObj }: IProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useDispatch();
 

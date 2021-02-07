@@ -7,8 +7,7 @@ import { authOperations } from 'redux/auth';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ErrorResponse from 'Components/Errors/ErrorResponse';
-import { ILogIn } from 'redux/store.interface';
-
+import { ILogIn } from 'Interfaces/interface';
 
 export default function LogInForm() {
   const dispatch = useDispatch();
@@ -26,7 +25,6 @@ export default function LogInForm() {
   //  Reaact hook Form
   // ========================================
 
-
   const { register, errors, handleSubmit } = useForm<ILogIn>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -35,7 +33,7 @@ export default function LogInForm() {
     },
   });
 
-  const onSubmit = (data : ILogIn) => {
+  const onSubmit = (data: ILogIn) => {
     dispatch(authOperations.login(data));
     return;
   };

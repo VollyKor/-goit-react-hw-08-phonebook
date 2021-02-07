@@ -1,16 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { authOperations, authActions } from 'redux/auth';
-import {IAuth, IError, ICredentials, IUser} from '../store.interface'
+import { IAuth, IError, ICredentials, IUser } from '../../Interfaces/interface';
 
-const initialState : IAuth = {
-    user: { name: null, email: null },
-    token: null,
-    isLoggedIn: false,
-    isLoading: false,
-    isFetching: false,
-    error: null,
-  }
-
+const initialState: IAuth = {
+  user: { name: null, email: null },
+  token: null,
+  isLoggedIn: false,
+  isLoading: false,
+  isFetching: false,
+  error: null,
+};
 
 interface ICredentialPayload {
   payload: ICredentials;
@@ -29,40 +28,52 @@ const authReducer = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [authActions.cleanseError.toString()](state : IAuth, _) {
+    [authActions.cleanseError.toString()](state: IAuth, _) {
       state.error = null;
     },
 
     // Register
     // ============================================
-    [authOperations.register.pending.toString()](state : IAuth, _) {
+    [authOperations.register.pending.toString()](state: IAuth, _) {
       state.isLoading = true;
       state.error = null;
     },
-    [authOperations.register.fulfilled.toString()] (state : IAuth, { payload } : ICredentialPayload ) {
+    [authOperations.register.fulfilled.toString()](
+      state: IAuth,
+      { payload }: ICredentialPayload,
+    ) {
       state.isLoading = false;
       state.isLoggedIn = true;
       state.user = payload.user;
       state.token = payload.token;
     },
-    [authOperations.register.rejected.toString()](state : IAuth, {payload} : IErrorPayload) {
+    [authOperations.register.rejected.toString()](
+      state: IAuth,
+      { payload }: IErrorPayload,
+    ) {
       state.error = payload;
       state.isLoading = false;
     },
 
     // Login
     // =======================================
-    [authOperations.login.pending.toString()](state : IAuth, _) {
+    [authOperations.login.pending.toString()](state: IAuth, _) {
       state.isLoading = true;
       state.error = null;
     },
-    [authOperations.login.fulfilled.toString()](state : IAuth, { payload }: ICredentialPayload) {
+    [authOperations.login.fulfilled.toString()](
+      state: IAuth,
+      { payload }: ICredentialPayload,
+    ) {
       state.isLoading = false;
       state.user = payload.user;
       state.token = payload.token;
       state.isLoggedIn = true;
     },
-    [authOperations.login.rejected.toString()](state: IAuth, {payload} : IErrorPayload) {
+    [authOperations.login.rejected.toString()](
+      state: IAuth,
+      { payload }: IErrorPayload,
+    ) {
       state.error = payload;
       state.isLoading = false;
     },
@@ -79,7 +90,10 @@ const authReducer = createSlice({
       state.isLoading = false;
       state.isLoggedIn = false;
     },
-    [authOperations.logout.rejected.toString()](state: IAuth, {payload} : IErrorPayload) {
+    [authOperations.logout.rejected.toString()](
+      state: IAuth,
+      { payload }: IErrorPayload,
+    ) {
       state.error = payload;
       state.isLoading = false;
     },
@@ -93,7 +107,10 @@ const authReducer = createSlice({
       state.error = null;
     },
 
-    [authOperations.getUser.fulfilled.toString()](state: IAuth, { payload } : IUserPayload)  {
+    [authOperations.getUser.fulfilled.toString()](
+      state: IAuth,
+      { payload }: IUserPayload,
+    ) {
       state.isLoading = false;
       state.isFetching = false;
       if (payload !== undefined) {

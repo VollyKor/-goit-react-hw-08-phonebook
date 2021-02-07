@@ -1,6 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import {IState} from '../store.interface'
-
+import { IState } from '../../Interfaces/interface';
 
 export const getContacts = (state: IState) => state.phonebook.entities;
 export const getFilterQuery = (state: IState) => state.phonebook.filterQuery;

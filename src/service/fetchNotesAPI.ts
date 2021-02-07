@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { INoteEntitiy } from 'redux/store.interface';
+import { INoteEntitiy } from 'Interfaces/interface';
 
 axios.defaults.baseURL = 'http://localhost:4040';
 

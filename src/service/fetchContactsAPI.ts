@@ -1,5 +1,5 @@
 import { axiosPB } from './axiosInstances';
-import { IContact, INewContact } from '../redux/store.interface'
+import { IContact, INewContact } from '../Interfaces/interface'
 
 //  arr[num, name, id]
 export const getContacts = async () => {

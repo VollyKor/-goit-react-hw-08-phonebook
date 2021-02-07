@@ -1,6 +1,6 @@
 import { combineReducers, createReducer } from '@reduxjs/toolkit';
 import { contactsOperations, contactsActions } from 'redux/phonebook';
-import { IContact } from 'redux/store.interface';
+import { IContact } from 'Interfaces/interface';
 
 const {
   setContacts,

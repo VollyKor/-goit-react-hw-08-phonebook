@@ -4,11 +4,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { contactsOperations } from 'redux/phonebook';
 import { useDispatch } from 'react-redux';
-import { IContact, INewContact } from 'redux/store.interface';
+import { IContact, INewContact } from 'Interfaces/interface';
 
 interface IProps {
   contactObj: IContact;
-  onClose : ((event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+  onClose: (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export default function ChangeContactForm({ contactObj, onClose }: IProps) {
@@ -19,7 +19,7 @@ export default function ChangeContactForm({ contactObj, onClose }: IProps) {
   // ====================================================
   const schema = yup.object().shape({
     name: yup.string().min(3, 'More then 3chars').max(20).required(),
-    number: yup.string().min(3, 'More then 3chars').max(20).required()
+    number: yup.string().min(3, 'More then 3chars').max(20).required(),
   });
 
   //  Reaact hook Form
@@ -36,11 +36,9 @@ export default function ChangeContactForm({ contactObj, onClose }: IProps) {
   // Submit Form
   // ==============================================================
   const onSubmit = (data: INewContact) => {
-    const changedContact = data
+    const changedContact = data;
 
-    dispatch(
-      contactsOperations.changeContact({id, changedContact}),
-    );
+    dispatch(contactsOperations.changeContact({ id, changedContact }));
     onClose();
     return;
   };
