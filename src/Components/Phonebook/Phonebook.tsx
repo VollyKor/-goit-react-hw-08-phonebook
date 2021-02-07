@@ -6,7 +6,11 @@ import { useDispatch } from 'react-redux';
 import { contactsOperations } from 'redux/phonebook';
 import { useEffect } from 'react';
 
-export default function Phonebook({ handleCLick }) {
+interface Props {
+  handleCLick: () => void;
+}
+
+export default function Phonebook({ handleCLick } : Props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(contactsOperations.setContacts());

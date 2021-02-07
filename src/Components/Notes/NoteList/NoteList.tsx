@@ -1,14 +1,16 @@
 import Button from 'Components/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { notesOperations } from 'redux/notes';
+import { getNotes } from 'redux/notes/notes-selectors';
 import s from './NoteList.module.scss';
 
 const { deleteNote } = notesOperations;
 
 export default function NoteList() {
-  const notes = useSelector(state => state.notes.entities);
+  const notes = useSelector(getNotes);
   const dispatch = useDispatch();
-  const time = value => {
+  
+  const time = (value: number) => {
     const formatTime = new Date(value);
     return formatTime.toDateString();
   };
@@ -23,9 +25,6 @@ export default function NoteList() {
             <p className={s.text}>{e.text}</p>
             <span className={s.time}>{time(e.createTime)}</span>
             <div className={s.btnList}>
-              {/* <Button onClick={console.log('click')} className={s.changeBtn}>
-                Change note
-              </Button> */}
               <Button
                 className={s.btn}
                 onClick={() => dispatch(deleteNote(e.id))}

@@ -1,45 +1,47 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { INoteEntitiy } from 'redux/store.interface';
 import { fetchNotesAPI } from 'service';
 
 export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
   try {
     const response = await fetchNotesAPI.getNotes();
-    return response.data;
+    return response;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 });
 
-export const addNote = createAsyncThunk('notes/addNote', async newNote => {
+export const addNote = createAsyncThunk('notes/addNote', async (newNote : INoteEntitiy) => {
   try {
     const response = await fetchNotesAPI.addNote(newNote);
-    console.log(response);
-    return response.data;
+    return response;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 });
 
-export const deleteNote = createAsyncThunk('notes/deleteNote', async NoteId => {
+export const deleteNote = createAsyncThunk('notes/deleteNote', async (NoteId: string) => {
   try {
     const response = await fetchNotesAPI.deleteNote(NoteId);
     return response;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 });
 
+interface IchangeNote {
+  noteId: string;
+  changedObj: INoteEntitiy
+}
+// unnecessary atm
 export const changeNote = createAsyncThunk(
   'notes/changeNote',
-  async (NoteId, changedObj) => {
+  async (dataObj: IchangeNote) => {
     try {
-      const response = await fetchNotesAPI.changeNote(NoteId, changedObj);
-      return response.data;
+      const {noteId, changedObj} = dataObj
+      const response = await fetchNotesAPI.changeNote(noteId, changedObj);
+      return response;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   },

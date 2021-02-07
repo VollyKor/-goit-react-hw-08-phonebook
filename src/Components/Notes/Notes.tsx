@@ -34,11 +34,18 @@ export default function Notes() {
     },
   });
 
-  const onSubmit = (data, e) => {
+  interface ISubmit {
+    title: string;
+    text: string;
+    id: string;
+    createTime: number;
+}
+
+  const onSubmit = (data: ISubmit ,) => {
     data.id = uuidv4();
     data.createTime = Date.now();
     dispath(addNote(data));
-    e.target.reset();
+    // e.target.reset();
   };
 
   return (
@@ -65,16 +72,12 @@ export default function Notes() {
                   ref={register}
                   name="text"
                   className={s.textField}
-                  type="text"
                 />
                 <p className={s.alarm}>{errors.text?.message}</p>
               </label>
-              <button type="submit" className={s.btn}>
+              <Button type="submit" className={s.btn}>
                 Add Note
-              </button>
-              {/* <Button type="submit" className={s.btn}>
-              Add Note
-            </Button> */}
+              </Button>
             </form>
           </div>
         </div>

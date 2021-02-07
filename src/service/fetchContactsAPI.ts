@@ -11,15 +11,10 @@ export const getContacts = async () => {
   }
 };
 
-type TAddContact = { 
-      name: string;
-    number: string;
-}
-
-export const addContact = async (contactObj : TAddContact) => {
+export const addContact = async (contactObj : INewContact) => {
   try {
-    const response = await axiosPB.post<TAddContact>('/contacts', contactObj);
-    return response;
+    const response = await axiosPB.post<IContact>('/contacts', contactObj);
+    return response.data;
   } catch (error) {
     throw error;
   }

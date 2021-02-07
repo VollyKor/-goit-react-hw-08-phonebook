@@ -1,4 +1,3 @@
-
 export interface IState {
     auth: IAuth;
     notes: INotes;
@@ -23,10 +22,10 @@ export interface INewContact {
 }
 
 export interface INotes {
-    entities: INoteEntities[];
+    entities: INoteEntitiy[];
 }
 
-export interface INoteEntities {
+export interface INoteEntitiy {
     id: string;
     title: string;
     text: string;

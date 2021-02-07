@@ -33,8 +33,8 @@ function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const history = useHistory();
   return (
-    !isFetching && (
-      <>
+    <>
+      {!isFetching && (
         <Suspense
           fallback={
             <div className="suspenseWrapper">
@@ -91,8 +91,8 @@ function App() {
             </Switch>
           </main>
         </Suspense>
-      </>
-    )
+      )}
+    </>
   );
 }
 

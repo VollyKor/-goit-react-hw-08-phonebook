@@ -20,7 +20,6 @@ descMessage: err.response.data._message || ''
   return newErrorObj;
 }
 
-
 export const register = createAsyncThunk(
   'auth/signup',
   async (credential: ISignUp, thunkAPI) => {
