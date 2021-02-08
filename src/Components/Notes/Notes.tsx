@@ -39,9 +39,9 @@ export default function Notes() {
     text: string;
     id: string;
     createTime: number;
-}
+  }
 
-  const onSubmit = (data: ISubmit ,) => {
+  const onSubmit = (data: ISubmit) => {
     data.id = uuidv4();
     data.createTime = Date.now();
     dispath(addNote(data));
@@ -53,7 +53,11 @@ export default function Notes() {
       <main>
         <div className={s.hero}>
           <div className="container">
+            <p style={{ color: 'red', fontSize: '32px', textAlign: 'center' }}>
+              !!!Attention! Work locally with json server
+            </p>
             <h1 className={s.title}>Notes for Every day</h1>
+
             <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
               <label className={s.label}>
                 <span className={s.span}>Name</span>
@@ -68,11 +72,7 @@ export default function Notes() {
               </label>
               <label className={s.label}>
                 <span className={s.span}>Write some notes</span>
-                <textarea
-                  ref={register}
-                  name="text"
-                  className={s.textField}
-                />
+                <textarea ref={register} name="text" className={s.textField} />
                 <p className={s.alarm}>{errors.text?.message}</p>
               </label>
               <Button type="submit" className={s.btn}>

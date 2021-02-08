@@ -19,12 +19,9 @@ export default function ErrorResponse() {
   return (
     <>
       {error && (
-        <>
-          <p className={s.error}>
-            {`Error: ${error.status}, ${error.message}! Pls try again`}
-          </p>
-          <span>Pls try again</span>
-        </>
+        <p className={s.error}>
+          {`Error: ${error.status}, ${error.message}! Pls try again`}
+        </p>
       )}
     </>
   );

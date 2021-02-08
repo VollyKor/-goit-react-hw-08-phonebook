@@ -11,6 +11,16 @@ export default function Todos() {
     <>
       {/* <div className={s.wrapper}> */}
       <div className={s.hero}>
+        <p
+          style={{
+            color: 'red',
+            fontSize: '32px',
+            textAlign: 'center',
+            marginTop: '0px',
+          }}
+        >
+          !!!Attention! In development!
+        </p>
         <h1 className={s.title}>To do to do</h1>
         <AddTodoForm />
         {/* <ClockContainer /> */}
