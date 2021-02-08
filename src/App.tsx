@@ -13,10 +13,18 @@ import PrivateRoute from 'Components/Routes/PrivateRoute';
 import PublicRoute from 'Components/Routes/PublickRoute';
 import NavBar from './Components/NavBar/NavBar';
 
-const Notes = lazy(() => import('./Components/Notes/Notes'));
-const Phonebook = lazy(() => import('./Components/Phonebook/Phonebook'));
-const HeroView = lazy(() => import('./Components/HeroView/HeroView'));
-const Todos = lazy(() => import('./Components/Todos/Todos'));
+const Notes = lazy(
+  () => import('./Components/Notes/Notes'),
+); /* webpackChunkName: 'NotesView' */
+const Phonebook = lazy(
+  () => import('./Components/Phonebook/Phonebook'),
+); /* webpackChunkName: 'PhonebookView' */
+const HeroView = lazy(
+  () => import('./Components/HeroView/HeroView'),
+); /* webpackChunkName: 'HeroView' */
+const Todos = lazy(
+  () => import('./Components/Todos/Todos'),
+); /* webpackChunkName: 'TodosView' */
 
 function App() {
   const dispatch = useDispatch();
