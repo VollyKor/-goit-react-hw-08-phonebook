@@ -1,24 +1,4 @@
 {
-  "notes": [
-    {
-      "id": "1",
-      "title": "Выучить React Query",
-      "text": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti labore a magni vitae placeat, impedit aperiam voluptatibus. Hic temporibus dolor architecto, expedita cupiditate ab magni est, laborum magnam voluptate soluta?",
-      "createTime": 1611411544850
-    },
-    {
-      "id": "2",
-      "title": "Выучить Регулярные выражения",
-      "text": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti labore a magni vitae placeat, impedit aperiam voluptatibus. Hic temporibus dolor architecto, expedita cupiditate ab magni est, laborum magnam voluptate soluta?",
-      "createTime": 1611411544850
-    },
-    {
-      "id": "3",
-      "title": "Выучить React Native",
-      "text": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti labore a magni vitae placeat, impedit aperiam voluptatibus. Hic temporibus dolor architecto, expedita cupiditate ab magni est, laborum magnam voluptate soluta?",
-      "createTime": 1611411544850
-    }
-  ],
   "todos": [
     {
       "id": "11",

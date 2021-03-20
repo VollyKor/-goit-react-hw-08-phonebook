@@ -9,25 +9,20 @@ const { deleteNote } = notesOperations;
 export default function NoteList() {
   const notes = useSelector(getNotes);
   const dispatch = useDispatch();
-  
-  const time = (value: number) => {
-    const formatTime = new Date(value);
-    return formatTime.toDateString();
-  };
 
   return (
     <div className={`container ${s.wrapper}`}>
       <h2 hidden>Note list</h2>
       <ul className={s.list}>
         {notes.map(e => (
-          <li className={s.item} key={e.id}>
+          <li className={s.item} key={e._id}>
             <p className={s.title}>{e.title}</p>
-            <p className={s.text}>{e.text}</p>
-            <span className={s.time}>{time(e.createTime)}</span>
+            <p>{e.text}</p>
+            {/* {e.createdAt && <span className={s.time}>{e.createdAt}</span>} */}
             <div className={s.btnList}>
               <Button
                 className={s.btn}
-                onClick={() => dispatch(deleteNote(e.id))}
+                onClick={() => dispatch(deleteNote(e._id))}
               >
                 Delete
               </Button>

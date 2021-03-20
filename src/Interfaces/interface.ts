@@ -2,7 +2,6 @@ export interface IState {
     auth: IAuth;
     notes: INotes;
     phonebook: IPhonebook;
-
 }
 
 export interface IPhonebook {
@@ -22,14 +21,32 @@ export interface INewContact {
 }
 
 export interface INotes {
-    entities: INoteEntitiy[];
+    entities: INoteEntitiy[]
+}
+
+export interface INoteSubmit {
+    title: string;
+    text: string;
+  }
+
+export interface INotesResponse {
+    code: number,
+    data: INoteEntitiy[];
+    status: string,
+}
+export interface IoneNoteResponse {
+    code: number,
+    data: INoteEntitiy;
+    status: string,
 }
 
 export interface INoteEntitiy {
-    id: string;
     title: string;
     text: string;
-    createTime: number;
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+    date?: string;
 }
 
 export interface IAuth {

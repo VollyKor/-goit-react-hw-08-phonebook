@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { notesOperations } from 'redux/notes';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { INoteSubmit } from 'Interfaces/interface';
 import * as yup from 'yup';
-import { v4 as uuidv4 } from 'uuid';
 import s from './Notes.module.scss';
 import NoteList from './NoteList/NoteList';
 import Button from 'Components/Button/Button';
@@ -24,6 +24,7 @@ export default function Notes() {
     title: yup.string().min(3, 'More then 3chars').max(30).required('Required'),
     text: yup.string().min(3).max(200).required('Required'),
   });
+
   // react hook form with default values part
   // ====================================
   const { register, errors, handleSubmit } = useForm({
@@ -34,16 +35,7 @@ export default function Notes() {
     },
   });
 
-  interface ISubmit {
-    title: string;
-    text: string;
-    id: string;
-    createTime: number;
-  }
-
-  const onSubmit = (data: ISubmit) => {
-    data.id = uuidv4();
-    data.createTime = Date.now();
+  const onSubmit = (data: INoteSubmit) => {
     dispath(addNote(data));
     // e.target.reset();
   };
@@ -54,7 +46,7 @@ export default function Notes() {
         <div className={s.hero}>
           <div className="container">
             <p style={{ color: 'red', fontSize: '32px', textAlign: 'center' }}>
-              !!!Attention! Work locally with json server
+              Work with my own API and MongoDB, in development
             </p>
             <h1 className={s.title}>Notes for Every day</h1>
 

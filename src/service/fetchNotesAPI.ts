@@ -1,20 +1,21 @@
 import axios from 'axios';
-import { INoteEntitiy } from 'Interfaces/interface';
+import { INoteEntitiy, INoteSubmit, INotesResponse, IoneNoteResponse } from 'Interfaces/interface';
 
-axios.defaults.baseURL = 'http://localhost:4040';
+
+axios.defaults.baseURL = 'https://vol-kor-pet-project.herokuapp.com';
 
 export const getNotes = async () => {
   try {
-    const response = await axios.get<INoteEntitiy[]>('/notes');
+    const response = await axios.get<INotesResponse>('/notes');
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const addNote = async (noteObj: INoteEntitiy) => {
+export const addNote = async (noteObj: INoteSubmit) => {
   try {
-    const response = await axios.post<INoteEntitiy>('/notes', noteObj);
+    const response  = await axios.post<IoneNoteResponse>('/notes', noteObj);
     return response.data;
   } catch (error) {
 throw error;

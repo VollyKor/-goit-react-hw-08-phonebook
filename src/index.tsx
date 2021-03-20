@@ -1,7 +1,6 @@
 import 'normalize-scss';
 import './index.scss';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
