@@ -1,4 +1,5 @@
 import s from './AddContactForm.module.scss';
+import { INewContact } from 'Interfaces/interface';
 import InputMask from 'react-input-mask';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,20 +14,20 @@ const { addContact } = contactsOperations;
 //  const unmask = value.replace(/\D/g, '');
 
 interface IProps {
-  onClose : ((event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+  onClose: (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export default function Form({ onClose } : IProps) {
+export default function Form({ onClose }: IProps) {
   const dispatch = useDispatch();
 
   //  Validation
   // ====================================================
   const schema = yup.object({
     name: yup.string().min(3, 'More then 3chars').max(20).required('Required'),
-    number: yup
+    phone: yup
       .string()
-      .test('len', 'Fill all space',(val='') => {
-          const val_length_without_dashes = val.replace(/\D/g, '').length;
+      .test('len', 'Fill all space', (val = '') => {
+        const val_length_without_dashes = val.replace(/\D/g, '').length;
         return val_length_without_dashes === 11;
       })
       .required(),
@@ -34,22 +35,18 @@ export default function Form({ onClose } : IProps) {
 
   //  Reaact hook Form
   // ========================================
-interface UseFormInputs {
-  name: string;
-  number: string;
-}
 
-  const { register, errors, handleSubmit } = useForm<UseFormInputs>({
+  const { register, errors, handleSubmit } = useForm<INewContact>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: '',
-      number: '',
-    }, 
+      phone: '',
+    },
   });
 
   // Submit Form
   // ==============================================================
-    const onSubmit = (data: UseFormInputs ) => {
+  const onSubmit = (data: INewContact) => {
     dispatch(addContact(data));
     onClose();
     return;
@@ -58,9 +55,7 @@ interface UseFormInputs {
   return (
     <div className={s.formWrapper}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <h2 className={s.title}>
-         'New Contact'
-        </h2>
+        <h2 className={s.title}>'New Contact'</h2>
 
         <label className={s.label}>
           <span className={s.inputTitle}>Name</span>
@@ -71,13 +66,13 @@ interface UseFormInputs {
         <label className={s.label}>
           <span className={s.inputTitle}>Number</span>
           <InputMask
-            name="number"
+            name="phone"
             mask="+3 (999) 999-99-99"
             alwaysShowMask={true}
             className={s.input}
             ref={register}
           />
-          <p className={s.error}>{errors.number?.message}</p>
+          <p className={s.error}>{errors.phone?.message}</p>
         </label>
 
         <button type="submit" className={s.btn}>

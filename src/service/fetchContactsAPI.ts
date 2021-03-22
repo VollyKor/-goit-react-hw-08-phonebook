@@ -1,11 +1,29 @@
 import { axiosPB } from './axiosInstances';
 import { IContact, INewContact } from '../Interfaces/interface'
 
+interface PaginatedContacts {
+  limit: number,
+  offset: number,
+  contacts: IContact[]
+}
+
+interface IgetAllContacts {
+  status: string,
+  code: string,
+  data: PaginatedContacts
+}
+
+interface IaddContacts {
+  status: string,
+  code: string,
+  data: IContact
+}
+
 //  arr[num, name, id]
 export const getContacts = async () => {
   try {
-    const response = await axiosPB.get<IContact[]>('/contacts');
-    return response;
+    const response = await axiosPB.get<IgetAllContacts>('/contacts');
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -13,7 +31,7 @@ export const getContacts = async () => {
 
 export const addContact = async (contactObj : INewContact) => {
   try {
-    const response = await axiosPB.post<IContact>('/contacts', contactObj);
+    const response = await axiosPB.post<IaddContacts>('/contacts', contactObj);
     return response.data;
   } catch (error) {
     throw error;

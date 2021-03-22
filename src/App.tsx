@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Switch } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { authSelectors, authOperations } from 'redux/auth';
+import { authSelectors, authOperations, authActions } from 'redux/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 
@@ -12,6 +12,7 @@ import Modal from './Components/Modal/Modal';
 import PrivateRoute from 'Components/Routes/PrivateRoute';
 import PublicRoute from 'Components/Routes/PublickRoute';
 import NavBar from './Components/NavBar/NavBar';
+import EmailConfirmation from 'Components/EmailConfirmation/EmailConfirmation';
 
 const Notes = lazy(
   () => import('./Components/Notes/Notes'),
@@ -29,6 +30,7 @@ const Todos = lazy(
 function App() {
   const dispatch = useDispatch();
   const isFetching = useSelector(authSelectors.getIsFetching);
+  const isRegistered = useSelector(authSelectors.getIsRegistered);
   const token = useSelector(authSelectors.getToken);
 
   useEffect(() => {
@@ -53,7 +55,7 @@ function App() {
           <NavBar />
           <main>
             <Switch>
-              <PrivateRoute path="/phonebook" redirectTo="/login">
+              <PrivateRoute path="/phonebook" redirectTo="/">
                 {isModalVisible && (
                   <Modal onClose={() => setIsModalVisible(false)}>
                     <AddContactForm onClose={() => setIsModalVisible(false)} />
@@ -63,6 +65,7 @@ function App() {
                   <Phonebook handleCLick={() => setIsModalVisible(true)} />
                 </div>
               </PrivateRoute>
+
               <PrivateRoute path="/todos">
                 <Todos />
               </PrivateRoute>
@@ -71,12 +74,7 @@ function App() {
                 <Notes />
               </PublicRoute>
 
-              <PublicRoute
-                exact
-                path="/register"
-                redirectTo="/phonebook"
-                restricted
-              >
+              <PublicRoute exact path="/register" restricted>
                 <Modal onClose={() => history.goBack()}>
                   <SignUpForm />
                 </Modal>
@@ -95,6 +93,13 @@ function App() {
 
               <PublicRoute path="/" exact>
                 <HeroView />
+                {isRegistered ? (
+                  <Modal
+                    onClose={() => dispatch(authActions.toggleIsRegistered())}
+                  >
+                    <EmailConfirmation />
+                  </Modal>
+                ) : null}
               </PublicRoute>
             </Switch>
           </main>

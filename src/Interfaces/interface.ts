@@ -11,13 +11,13 @@ export interface IPhonebook {
 
 export interface IContact {
     id: string;
-    name: string;
-    number: string;
+    name: string
+    phone: string;
 }
 
 export interface INewContact {
     name: string;
-    number: string;
+    phone: string;
 }
 
 export interface INotes {
@@ -51,11 +51,11 @@ export interface INoteEntitiy {
 
 export interface IAuth {
     user: IUser;
-    token: string | null;
     isLoggedIn: boolean;
     isLoading: boolean;
     isFetching: boolean;
     error: IError | null;
+    isRegistered: boolean;
 }
 
 export interface IError {
@@ -67,11 +67,12 @@ export interface IError {
 export interface IUser {
     name: string | null;
     email: string | null;
+    token: string
 }
 
 export interface ICredentials {
     token: string;
-    user: IUser;
+    data: IUser;
 }
 
 export interface ILogIn {

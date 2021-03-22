@@ -5,14 +5,13 @@ import CloseButton from '../CloseButton/CloseButton';
 const modalRoot = document.querySelector('#modalRoot') as HTMLElement;
 
 type Props = {
-  onClose : ((event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-  children: React.ReactNode
-} 
+  onClose: (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  children: React.ReactNode;
+};
 
 export default function Modal({ onClose, children }: Props) {
-  
   function onBackdropClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    if (e.target === e.currentTarget ) {
+    if (e.target === e.currentTarget) {
       onClose();
     }
   }
@@ -20,7 +19,7 @@ export default function Modal({ onClose, children }: Props) {
   return createPortal(
     <div className={s.backdrop} onClick={onBackdropClick}>
       <div className={s.wrapper}>
-        <CloseButton onClose={onClose} />
+        <CloseButton onClose={() => onClose()} />
         {children}
       </div>
     </div>,

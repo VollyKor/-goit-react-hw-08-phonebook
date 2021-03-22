@@ -15,8 +15,11 @@ const FilterReducer = createReducer('' as string, builder => {
 
 const ContactListReducer = createReducer([] as IContact[], builder =>
   builder
-    .addCase(setContacts.fulfilled, (_, { payload }) => payload)
-    .addCase(addContact.fulfilled, (state, { payload }) => [payload, ...state])
+    .addCase(setContacts.fulfilled, (_, { payload }) => payload.contacts)
+    .addCase(addContact.fulfilled, (state, { payload }) => {
+      // return [payload, ...state]
+      return [...state, payload];
+    })
     .addCase(deleteContact.fulfilled, (state, { payload }) =>
       state.filter(e => e.id !== payload),
     )

@@ -3,14 +3,15 @@ import s from './SignUpForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { authOperations } from 'redux/auth';
-import { useDispatch } from 'react-redux';
+import { authOperations, authSelectors } from 'redux/auth';
+import { useDispatch, useSelector } from 'react-redux';
 import ErrorResponse from 'Components/Errors/ErrorResponse';
 import { ISignUp } from 'Interfaces/interface';
+import { Redirect } from 'react-router';
 
 export default function SignUpForm() {
   const dispatch = useDispatch();
-
+  const isRegistered = useSelector(authSelectors.getIsRegistered);
   //  Validation
   // ====================================================
   const schema = yup.object().shape({
@@ -44,36 +45,52 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className={s.formWrapper}>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <h2 className={s.title}>Sign Up</h2>
+    <>
+      {isRegistered ? (
+        <Redirect to="/" />
+      ) : (
+        <div className={s.formWrapper}>
+          <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+            <h2 className={s.title}>Sign Up</h2>
 
-        <label className={s.label}>
-          <span className={s.inputTitle}>User Name</span>
-          <input ref={register} name="name" className={s.input} type="text" />
-          <p className={s.error}>{errors.name?.message}</p>
-        </label>
+            <label className={s.label}>
+              <span className={s.inputTitle}>User Name</span>
+              <input
+                ref={register}
+                name="name"
+                className={s.input}
+                type="text"
+              />
+              <p className={s.error}>{errors.name?.message}</p>
+            </label>
 
-        <label className={s.label}>
-          <span className={s.inputTitle}>E-mail</span>
-          <input ref={register} className={s.input} name="email" type="email" />
-          <p className={s.error}>{errors.email?.message}</p>
-        </label>
+            <label className={s.label}>
+              <span className={s.inputTitle}>E-mail</span>
+              <input
+                ref={register}
+                className={s.input}
+                name="email"
+                type="email"
+              />
+              <p className={s.error}>{errors.email?.message}</p>
+            </label>
 
-        <label className={s.label}>
-          <span className={s.inputTitle}>Password</span>
-          <input
-            ref={register}
-            className={s.input}
-            name="password"
-            type="password"
-          />
-          <p className={s.error}>{errors.password?.message}</p>
-        </label>
+            <label className={s.label}>
+              <span className={s.inputTitle}>Password</span>
+              <input
+                ref={register}
+                className={s.input}
+                name="password"
+                type="password"
+              />
+              <p className={s.error}>{errors.password?.message}</p>
+            </label>
 
-        <Button type="submit">Sign up</Button>
-        <ErrorResponse />
-      </form>
-    </div>
+            <Button type="submit">Sign up</Button>
+            <ErrorResponse />
+          </form>
+        </div>
+      )}
+    </>
   );
 }

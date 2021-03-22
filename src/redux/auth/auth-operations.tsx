@@ -26,15 +26,31 @@ function getErrorData(err: any): IError {
   return newErrorObj;
 }
 
+// export const register = createAsyncThunk(
+//   'auth/signup',
+//   async (credential: ISignUp, thunkAPI) => {
+//     try {
+//       const { data }: { data: ICredentials } = await axiosPB.post(
+//         '/users/registration',
+//         credential,
+//       );
+//       // token.set(data.token);
+//       return data;
+//     } catch (err) {
+//       return thunkAPI.rejectWithValue(getErrorData(err));
+//     }
+//   },
+// );
+
 export const register = createAsyncThunk(
   'auth/signup',
   async (credential: ISignUp, thunkAPI) => {
     try {
       const { data }: { data: ICredentials } = await axiosPB.post(
-        '/users/signup',
+        '/users/registration',
         credential,
       );
-      token.set(data.token);
+      // token.set(data.token);
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(getErrorData(err));
@@ -50,7 +66,7 @@ export const login = createAsyncThunk(
         '/users/login',
         credentials,
       );
-      token.set(data.token);
+      token.set(data.data.token);
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(getErrorData(err));
@@ -70,7 +86,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 export const getUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState() as IState;
-    const persistedToken = state.auth.token;
+    const persistedToken = state.auth.user.token;
 
     if (persistedToken === null) {
       return;

@@ -5,12 +5,18 @@ import s from './Phonebook.module.scss';
 import { useDispatch } from 'react-redux';
 import { contactsOperations } from 'redux/phonebook';
 import { useEffect } from 'react';
+import { useRouteMatch, Route, useHistory } from 'react-router';
+import Modal from 'Components/Modal/Modal';
+import ContactEdit from 'Components/Phonebook/ContactEdit/ContactEdit';
 
 interface Props {
   handleCLick: () => void;
 }
 
-export default function Phonebook({ handleCLick } : Props) {
+export default function Phonebook({ handleCLick }: Props) {
+  const history = useHistory();
+  const { path } = useRouteMatch();
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(contactsOperations.setContacts());
@@ -28,6 +34,15 @@ export default function Phonebook({ handleCLick } : Props) {
         </div>
       </div>
       <ContactList />
+      <Route path={`/phonebook/:contactId`} exact>
+        <Modal
+          onClose={() => {
+            history.push(path);
+          }}
+        >
+          <ContactEdit />
+        </Modal>
+      </Route>
     </>
   );
 }

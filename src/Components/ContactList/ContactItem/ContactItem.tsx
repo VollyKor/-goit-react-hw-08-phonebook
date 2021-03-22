@@ -1,10 +1,8 @@
-import { useState } from 'react';
-import Modal from '../../Modal/Modal';
 import s from './ContactItem.module.scss';
 import { contactsOperations } from 'redux/phonebook';
 import { useDispatch } from 'react-redux';
-import ChangeContactForm from 'Components/Forms/ChangeContactForm/ChangeContactForm';
 import { IContact } from 'Interfaces/interface';
+import { useHistory, useRouteMatch } from 'react-router';
 
 const { deleteContact } = contactsOperations;
 
@@ -13,15 +11,16 @@ interface IProps {
 }
 
 export default function ContactItem({ contactObj }: IProps) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { url } = useRouteMatch();
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const { name, number, id } = contactObj;
+  const { name, phone, id } = contactObj;
   return (
     <>
       <p className={s.item}>
         <span className={s.itemName}>{name}</span>
-        <span className={s.itemPhoneNumber}>{number}</span>
+        <span className={s.itemPhoneNumber}>{phone}</span>
       </p>
 
       <div className={`flex-box ${s.btnList}`}>
@@ -29,7 +28,7 @@ export default function ContactItem({ contactObj }: IProps) {
           type="button"
           className={s.btn}
           onClick={() => {
-            setIsModalVisible(true);
+            history.push(`${url}/${id}`);
           }}
         >
           Change Contact
@@ -43,21 +42,6 @@ export default function ContactItem({ contactObj }: IProps) {
           Delete Contact
         </button>
       </div>
-
-      {isModalVisible && (
-        <Modal
-          onClose={() => {
-            setIsModalVisible(false);
-          }}
-        >
-          <ChangeContactForm
-            onClose={() => {
-              setIsModalVisible(false);
-            }}
-            contactObj={contactObj}
-          />
-        </Modal>
-      )}
     </>
   );
 }

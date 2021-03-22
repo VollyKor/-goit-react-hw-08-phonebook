@@ -13,13 +13,13 @@ interface IProps {
 
 export default function ChangeContactForm({ contactObj, onClose }: IProps) {
   const dispatch = useDispatch();
-  const { name, number, id } = contactObj;
+  const { name, phone, id } = contactObj;
 
   //  Validation
   // ====================================================
   const schema = yup.object().shape({
     name: yup.string().min(3, 'More then 3chars').max(20).required(),
-    number: yup.string().min(3, 'More then 3chars').max(20).required(),
+    phone: yup.string().min(3, 'More then 3chars').max(20).required(),
   });
 
   //  Reaact hook Form
@@ -29,7 +29,7 @@ export default function ChangeContactForm({ contactObj, onClose }: IProps) {
     resolver: yupResolver(schema),
     defaultValues: {
       name,
-      number,
+      phone,
     },
   });
 
@@ -63,11 +63,11 @@ export default function ChangeContactForm({ contactObj, onClose }: IProps) {
           <span className={s.inputTitle}>Number</span>
           <input
             type="tel"
-            name="number"
+            name="phone"
             className={s.input}
             ref={register({ required: true })}
           />
-          <p className={s.error}>{errors.number?.message}</p>
+          <p className={s.error}>{errors.phone?.message}</p>
         </label>
 
         <button className={s.btn} type="submit">

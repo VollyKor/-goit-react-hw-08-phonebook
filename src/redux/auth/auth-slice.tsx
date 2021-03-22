@@ -3,12 +3,12 @@ import { authOperations, authActions } from 'redux/auth';
 import { IAuth, IError, ICredentials, IUser } from '../../Interfaces/interface';
 
 const initialState: IAuth = {
-  user: { name: null, email: null },
-  token: null,
+  user: { name: null, email: null, token: '' },
   isLoggedIn: false,
   isLoading: false,
   isFetching: false,
   error: null,
+  isRegistered: false,
 };
 
 interface ICredentialPayload {
@@ -31,7 +31,9 @@ const authReducer = createSlice({
     [authActions.cleanseError.toString()](state: IAuth, _) {
       state.error = null;
     },
-
+    [authActions.toggleIsRegistered.toString()](state: IAuth, _) {
+      state.isRegistered = !state.isRegistered;
+    },
     // Register
     // ============================================
     [authOperations.register.pending.toString()](state: IAuth, _) {
@@ -43,9 +45,8 @@ const authReducer = createSlice({
       { payload }: ICredentialPayload,
     ) {
       state.isLoading = false;
-      state.isLoggedIn = true;
-      state.user = payload.user;
-      state.token = payload.token;
+      state.user = payload.data;
+      state.isRegistered = true;
     },
     [authOperations.register.rejected.toString()](
       state: IAuth,
@@ -66,9 +67,9 @@ const authReducer = createSlice({
       { payload }: ICredentialPayload,
     ) {
       state.isLoading = false;
-      state.user = payload.user;
-      state.token = payload.token;
+      state.user = payload.data;
       state.isLoggedIn = true;
+      state.isRegistered = false;
     },
     [authOperations.login.rejected.toString()](
       state: IAuth,
@@ -85,10 +86,10 @@ const authReducer = createSlice({
       state.error = null;
     },
     [authOperations.logout.fulfilled.toString()](state: IAuth, _) {
-      state.user = { name: null, email: null };
-      state.token = null;
+      state.user = { name: null, email: null, token: '' };
       state.isLoading = false;
       state.isLoggedIn = false;
+      state.isRegistered = false;
     },
     [authOperations.logout.rejected.toString()](
       state: IAuth,
