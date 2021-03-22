@@ -1,25 +1,19 @@
 import ChangeContactForm from 'Components/Forms/ChangeContactForm/ChangeContactForm';
-import { useParams, useRouteMatch, useHistory } from 'react-router';
+import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/phonebook/phonebook-selectors';
 
-export default function ContactEdit() {
+export default function ContactEdit({ onClose }) {
   const { contactId } = useParams();
-  const history = useHistory();
-  const { path } = useRouteMatch();
 
   const contacts = useSelector(getContacts);
   const contact = contacts.find(e => e.id === contactId);
   return (
     <>
       {contact !== undefined ? (
-        <ChangeContactForm
-          onClose={() => {
-            history.push(path);
-          }}
-          contactObj={contact}
-        />
+        <ChangeContactForm onClose={onClose} contactObj={contact} />
       ) : (
+        //   create component for this
         <div>Contact Not Found</div>
       )}
     </>

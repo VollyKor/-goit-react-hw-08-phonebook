@@ -122,6 +122,12 @@ const authReducer = createSlice({
     [authOperations.getUser.rejected.toString()](state: IAuth, _) {
       state.isFetching = false;
       state.isLoading = false;
+      state.isLoggedIn = false;
+      state.user = {
+        name: null,
+        email: null,
+        token: '',
+      };
     },
   },
 });

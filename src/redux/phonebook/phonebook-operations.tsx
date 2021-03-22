@@ -49,7 +49,7 @@ export const changeContact = createAsyncThunk(
     try {
       const { id, changedContact } = data;
       const response = await fetchContactsAPI.changeContact(id, changedContact);
-      return response;
+      return response.data;
     } catch (error) {
       throw error;
     }

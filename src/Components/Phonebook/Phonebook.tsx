@@ -40,7 +40,11 @@ export default function Phonebook({ handleCLick }: Props) {
             history.push(path);
           }}
         >
-          <ContactEdit />
+          <ContactEdit
+            onClose={() => {
+              history.push(path);
+            }}
+          />
         </Modal>
       </Route>
     </>

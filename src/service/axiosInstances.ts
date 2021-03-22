@@ -9,6 +9,9 @@ import axios from 'axios';
 
 // Dev
 // =======================================================
+// export const axiosPB = axios.create({
+//   baseURL: 'http://localhost:3000',
+// });
 export const axiosPB = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://vol-kor-pet-project.herokuapp.com/',
 });
