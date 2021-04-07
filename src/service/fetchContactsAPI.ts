@@ -50,7 +50,6 @@ export const deleteContact = async (ObjId : string) => {
 export const changeContact = async (ObjId:string, changedObj: INewContact)  => {
   try {
     const response = await axiosPB.patch<IaddContacts>(`/contacts/${ObjId}`, changedObj);
-        console.log(response.data);
     return response.data;
   } catch (error) {
     throw error;

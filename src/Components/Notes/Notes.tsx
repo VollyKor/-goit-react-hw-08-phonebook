@@ -8,11 +8,14 @@ import * as yup from 'yup';
 import s from './Notes.module.scss';
 import NoteList from './NoteList/NoteList';
 import Button from 'Components/Button/Button';
+import { Route, useHistory } from 'react-router';
+import NoteEdit from 'Components/Notes/NoteEdit/NoteEdit';
 
 const { fetchNotes, addNote } = notesOperations;
 
 export default function Notes() {
   const dispath = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispath(fetchNotes());
@@ -74,6 +77,9 @@ export default function Notes() {
           </div>
         </div>
         <NoteList />
+        <Route path="/notes/:noteId">
+          <NoteEdit onClose={() => history.push('/notes')} />
+        </Route>
       </main>
     </>
   );

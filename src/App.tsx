@@ -70,9 +70,9 @@ function App() {
                 <Todos />
               </PrivateRoute>
 
-              <PublicRoute path="/notes">
+              <PrivateRoute path="/notes">
                 <Notes />
-              </PublicRoute>
+              </PrivateRoute>
 
               <PublicRoute exact path="/register" restricted>
                 <Modal onClose={() => history.goBack()}>

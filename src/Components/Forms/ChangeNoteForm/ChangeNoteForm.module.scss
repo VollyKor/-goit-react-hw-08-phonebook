@@ -1,0 +1,81 @@
+.btn:hover {
+  background-color: darksalmon;
+}
+
+.formWrapper {
+  padding: 40px;
+}
+
+.form {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 700;
+  color: var(--primary-color-dark);
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 10px;
+  margin: 0;
+  border: 1px solid var(--accent-color);
+  border-radius: 3px;
+
+  outline: none;
+  box-shadow: 5px 5px 5px -5px rgba(82, 82, 82, 0.6);
+
+  &:hover {
+    border-color: var(--primary-color-dark);
+  }
+
+  &:focus {
+    border: 1px solid var(--primary-color);
+    box-shadow: 5px 5px 5px -5px rgba(82, 82, 82, 0.6),
+      0px 5px 10px 2px rgba(184, 102, 58, 0.2) inset;
+  }
+}
+
+.label {
+  position: relative;
+  display: block;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.inputTitle {
+  margin-right: 10px;
+}
+
+.btn {
+  padding: 5px;
+  outline: none;
+  border-radius: 4px;
+  border: solid 2px var(--primary-color);
+  background-color: var(--primary-color-text);
+  color: var(--primary-text-color);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover,
+  &:focus {
+    border: 2px solid transparent;
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
+  }
+}
+
+.error {
+  margin: 0;
+  position: absolute;
+  top: 100%;
+  font-size: 10px;
+  color: red;
+  z-index: 2;
+}

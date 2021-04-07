@@ -29,18 +29,17 @@ export default function NavBar() {
               </NavLink>
             </li>
 
-            <li className={s.item}>
-              <NavLink
-                to="/notes"
-                className={s.link}
-                activeClassName={s.active}
-              >
-                Notes
-              </NavLink>
-            </li>
-
             {isLoggedIn && (
               <>
+                <li className={s.item}>
+                  <NavLink
+                    to="/notes"
+                    className={s.link}
+                    activeClassName={s.active}
+                  >
+                    Notes
+                  </NavLink>
+                </li>
                 <li className={s.item}>
                   <NavLink
                     to="/phonebook"

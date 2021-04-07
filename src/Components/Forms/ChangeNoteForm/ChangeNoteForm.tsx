@@ -1,44 +1,43 @@
-import s from './ChangeContactForm.module.scss';
+import s from './ChangeNoteForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { contactsOperations } from 'redux/phonebook';
+import { notesOperations } from 'redux/notes';
 import { useDispatch } from 'react-redux';
-import { IContact, INewContact } from 'Interfaces/interface';
+import { INoteEntitiy } from 'Interfaces/interface';
 
 interface IProps {
-  contactObj: IContact;
+  noteObj: INoteEntitiy;
   onClose: (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export default function ChangeContactForm({ contactObj, onClose }: IProps) {
+export default function ChangeNoteForm({ noteObj, onClose }: IProps) {
   const dispatch = useDispatch();
-  const { name, phone, id } = contactObj;
+  const { title, text, id } = noteObj;
 
   //  Validation
   // ====================================================
   const schema = yup.object().shape({
-    name: yup.string().min(3, 'More then 3chars').max(20).required(),
-    phone: yup.string().min(3, 'More then 3chars').max(20).required(),
+    title: yup.string().min(3, 'More then 3chars').max(20).required(),
+    text: yup.string().min(3, 'More then 3chars').max(200).required(),
   });
 
   //  Reaact hook Form
   // ========================================
-
-  const { register, errors, handleSubmit } = useForm<INewContact>({
+  const { register, errors, handleSubmit } = useForm<INoteEntitiy>({
     resolver: yupResolver(schema),
     defaultValues: {
-      name,
-      phone,
+      title,
+      text,
     },
   });
 
   // Submit Form
   // ==============================================================
-  const onSubmit = (data: INewContact) => {
-    const changedContact = data;
+  const onSubmit = (data: INoteEntitiy) => {
+    const changedNote = data;
 
-    dispatch(contactsOperations.changeContact({ id, changedContact }));
+    dispatch(notesOperations.changeNote({ ...changedNote, id }));
     onClose();
     return;
   };
@@ -46,28 +45,26 @@ export default function ChangeContactForm({ contactObj, onClose }: IProps) {
   return (
     <div className={s.formWrapper}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <h2 className={s.title}>Change Contact</h2>
+        <h2 className={s.title}>Change Note</h2>
 
         <label className={s.label}>
-          <span className={s.inputTitle}>Name</span>
+          <span className={s.inputTitle}>Title</span>
           <input
-            type="name"
-            name="name"
+            name="title"
             className={s.input}
-            ref={register({ required: true, maxLength: 20 })}
+            ref={register({ required: true, maxLength: 16 })}
           />
-          <p className={s.error}>{errors.name?.message}</p>
+          <p className={s.error}>{errors.title?.message}</p>
         </label>
 
         <label className={s.label}>
-          <span className={s.inputTitle}>phone</span>
-          <input
-            type="tel"
-            name="phone"
+          <span className={s.inputTitle}>Number</span>
+          <textarea
+            name="text"
             className={s.input}
             ref={register({ required: true })}
           />
-          <p className={s.error}>{errors.phone?.message}</p>
+          <p className={s.error}>{errors.text?.message}</p>
         </label>
 
         <button className={s.btn} type="submit">

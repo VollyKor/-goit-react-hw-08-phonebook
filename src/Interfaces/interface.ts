@@ -29,6 +29,12 @@ export interface INoteSubmit {
     text: string;
   }
 
+export interface IchangeNote {
+  id: string;
+  title: string;
+  text: string;
+}
+
 export interface INotesResponse {
     code: number,
     data: INoteEntitiy[];
@@ -43,10 +49,7 @@ export interface IoneNoteResponse {
 export interface INoteEntitiy {
     title: string;
     text: string;
-    _id: string;
-    createdAt: string;
-    updatedAt: string;
-    date?: string;
+    id: string;
 }
 
 export interface IAuth {

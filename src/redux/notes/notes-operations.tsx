@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { INoteEntitiy, INoteSubmit } from 'Interfaces/interface';
+import { INoteSubmit, IchangeNote } from 'Interfaces/interface';
 import { fetchNotesAPI } from 'service';
 
 export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
@@ -36,19 +36,14 @@ export const deleteNote = createAsyncThunk(
   },
 );
 
-interface IchangeNote {
-  noteId: string;
-  changedObj: INoteEntitiy;
-}
-
-// unnecessary atm
 export const changeNote = createAsyncThunk(
   'notes/changeNote',
-  async (dataObj: IchangeNote) => {
+  async (data: IchangeNote) => {
     try {
-      const { noteId, changedObj } = dataObj;
-      const response = await fetchNotesAPI.changeNote(noteId, changedObj);
-      return response;
+      const response = await fetchNotesAPI.changeNote(data.id, data);
+      console.log(response.data);
+
+      return response.data;
     } catch (error) {
       throw error;
     }
